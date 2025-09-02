@@ -1,15 +1,12 @@
-# 7ª Digitação (Aqui)   ✨  
 import flet as ft
 
 def main(page: ft.Page):
-    page.title = "Calculadora simples"
-    # Definindo padding individualmente
-    page.padding=ft.padding.only(top=40, left=20, right=20, bottom=20)
-
+    page.title = "Calculadora Simples"
+    page.padding = ft.padding.only(top=40, left=20, right=20, bottom=20)
+    
     # Campos e elementos
-    numero1 = ft.TextField(label="Primeiro número",width=200, keyboard_type=ft.KeyboardType.NUMBER)
-    numero2 = ft.TextField(label="Segundo número",width=200, keyboard_type=ft.KeyboardType.NUMBER)
-    # Lista para escolher operação desejada
+    numero1 = ft.TextField(label="Primeiro número", width=200, keyboard_type=ft.KeyboardType.NUMBER)
+    numero2 = ft.TextField(label="Segundo número", width=200, keyboard_type=ft.KeyboardType.NUMBER)
     operacao = ft.Dropdown(
         label="Operação", width=200,
         options=[
@@ -17,16 +14,12 @@ def main(page: ft.Page):
             ft.dropdown.Option("Multiplicação"), ft.dropdown.Option("Divisão")
         ]
     )
-
-    # Resultado
-    resultado = ft.Text("Resultado aparecerá aqui",size=20, text_align=ft.TextAlign.CENTER, color=ft.Colors.GREY_600)
-
-    # Função para realizar o cálculo
+    resultado = ft.Text("Resultado aparecerá aqui", size=20, text_align=ft.TextAlign.CENTER, color=ft.Colors.GREY_600)
+    
     def calcular(e):
         try:
             num1, num2, op = float(numero1.value), float(numero2.value), operacao.value
-
-            # Validações
+            
             if not op:
                 resultado.value, resultado.color = "⚠️ Selecione uma operação!", ft.Colors.ORANGE
             elif op == "Divisão" and num2 == 0:
@@ -36,10 +29,8 @@ def main(page: ft.Page):
                            "Multiplicação": ("×", num1 * num2), "Divisão": ("÷", num1 / num2)}
                 simbolo, res = simbolos[op]
                 resultado.value, resultado.color = f"{num1} {simbolo} {num2} = {res:.2f}", ft.Colors.GREEN
-
         except ValueError:
             resultado.value, resultado.color = "❌ Digite números válidos!", ft.Colors.RED
-
         page.update()
     
     def limpar(e):
